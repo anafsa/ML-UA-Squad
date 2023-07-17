@@ -1,0 +1,11 @@
+openapi-python-client
+langchain
+cohere
+huggingface_hub
+ipywidgets
+chromadb
+google-search-results
+Xformers
+tiktoken
+openai
+transformers
