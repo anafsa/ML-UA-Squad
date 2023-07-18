@@ -1,6 +1,6 @@
 openapi-python-client
+transformers # git+https://github.com/huggingface/transformers
 langchain
-cohere
 huggingface_hub
 ipywidgets
 chromadb
@@ -8,4 +8,6 @@ google-search-results
 Xformers
 tiktoken
 openai
-transformers
+git+https://github.com/ai-forever/Kandinsky-2.git
+git+https://github.com/openai/CLIP.git
+opencv-python
