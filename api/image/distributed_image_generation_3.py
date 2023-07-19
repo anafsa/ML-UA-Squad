@@ -69,18 +69,17 @@ negative_prior_prompt = "lowres, text, error, cropped, worst quality, low qualit
         mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured"
 
 current_prompt_index = 0
-prompt_text = reduced_story_prompts[current_prompt_index]
+prompt_text = story_prompts[current_prompt_index]
 
 previous_prompt = ""
 if current_prompt_index > 0:
     previous_prompt = reduced_story_prompts[current_prompt_index-1]
-    # prompt_text = prompt_text + f". Generate an image depticing the {init_prompts[current_prompt_index]} incorporating elements from the image generated using this prompt: {previous_prompt}."
-    prompt_text = prompt_text + f". Generate an image depticing the {init_prompts[current_prompt_index]} and do it using the style of the image that can be generated using this prompt: {previous_prompt}."
+    prompt_text = prompt_text + f". Generate an image depticing the {init_prompts[current_prompt_index]}, with the same style and incorporating elements from the image generated using this prompt: {previous_prompt}."
 
 
 images = []
 
-story_folder = "ES"
+story_folder = "ES_3"
 os.makedirs(story_folder, exist_ok = True)
 
 print(f"*** Generating {total_num_images} image(s) ***")
@@ -89,7 +88,7 @@ for i in range(len(story_prompts)):
 
     print(f"Prompt: \n{prompt_text}" )
 
-    num_inference_steps = 150 
+    num_inference_steps = 200 
     
     # Generating embeddings on the CPU
     img_emb = prior(
@@ -120,8 +119,7 @@ for i in range(len(story_prompts)):
     if current_prompt_index > 0:
         previous_prompt = reduced_story_prompts[current_prompt_index-1]
 
-    # prompt_text = prompt_text + f". Generate an image depticing the {init_prompts[current_prompt_index]} incorporating elements from the image generated using this prompt: {previous_prompt}."
-    prompt_text = prompt_text + f". Generate an image depticing the {init_prompts[current_prompt_index]} and do it using the style of the image that can be generated using this prompt: {previous_prompt}."
+    prompt_text = prompt_text + f". Generate an image depticing the {init_prompts[current_prompt_index]} incorporating elements from the image generated using this prompt: {previous_prompt}."
     images += image_batch.images
 
 # Possible paths: mixing of two consecutive images.
