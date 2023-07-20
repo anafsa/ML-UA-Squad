@@ -11,3 +11,4 @@ openai
 git+https://github.com/ai-forever/Kandinsky-2.git
 git+https://github.com/openai/CLIP.git
 opencv-python
+pyiqa

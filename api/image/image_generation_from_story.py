@@ -6,27 +6,43 @@ from diffusers.models import UNet2DConditionModel
 import re
 import pickle
 import glob
+from pyiqa import create_metric
 
-# story = pickle.load("stories/1689788440.pkl")
-main_id = 1689788440
-with open(f'stories/{main_id}.pkl', 'rb') as f:
-    data = pickle.load(f)
+def brisk(image):
 
-# print(story.keys())
-# print(story["history"])
+    metric_name = "brisque"
 
-for paragph in data["story"]:
-    print(paragph)
+    iqa_model = create_metric(metric_name, metric_mode="NR")
 
-story_prompts = ["Emily's Discovery: Generate an image that depicts young Emily immersed in a world of books, surrounded by shelves filled with stories that captivate her imagination and offer solace during her challenging times.",
-                 "The Medical Journey: Create an image that portrays Emily's resilience and determination as she undergoes medical treatments, showcasing her bravery in the face of adversity and the unwavering support of her parents and medical professionals.",
-                "A Ray of Hope: Generate an image that symbolizes Emily's newfound hope and optimism. It could feature a vibrant sunrise or a blossoming flower, representing the turning point in her battle against the disease."]
+    score = iqa_model(image)
+    
+    return score.item()
 
-reduced_story_prompts = [re.split(r'[,\.]', story_prompt)[0] for story_prompt in story_prompts]
-# print(reduced_story_prompts)
 
-init_prompts = [reduced_story_prompt.split(":")[0] for reduced_story_prompt in reduced_story_prompts]
-# print(init_prompts)
+story_folder_path = "Default"
+for file_path in glob.glob(r"stories/*.pkl"):
+    story_folder_path = re.split(r'[\/\.]', file_path)[1]
+    with open(file_path, 'rb') as f:
+        data = pickle.load(f)
+
+print("Story folder: ",story_folder_path)
+# print(data.keys())
+# print(data["story"])
+
+story_prompts = []
+story_title = data["cover_image_prompt"]
+story_prompts.append(story_title)
+
+story_prompts_polarity= ["neutral"]
+for story_paragraph in data["story"]:
+    story_prompts.append(story_paragraph["image_prompt"])
+    story_prompts_polarity.append(story_paragraph["polarity"])
+ 
+    
+print(f"Story Title: {story_title}")
+
+print(story_prompts)
+
 
 DEVICE_CPU = torch.device('cpu:0')
 DEVICE_GPU_0 = torch.device('cuda:0')
@@ -76,22 +92,15 @@ negative_prior_prompt = "lowres, text, error, cropped, worst quality, low qualit
         mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured"
 
 current_prompt_index = 0
-prompt_text = f"{story_prompts[current_prompt_index]} Child Storybook illustration, 4k"# by Matt Bors"
-
-previous_prompt = ""
-if current_prompt_index > 0:
-    previous_prompt = reduced_story_prompts[current_prompt_index-1]
-    prompt_text = prompt_text + f". Generate an image as a storybook illustration by Matt Bors"
-
+prompt_text = f"{story_prompts[current_prompt_index]} Child Storybook illustration, 4k"
 
 images = []
 
-story_folder = "ES_8"
-os.makedirs(story_folder, exist_ok = True)
+os.makedirs(story_folder_path, exist_ok = True)
 
 print(f"*** Generating {total_num_images} image(s) ***")
 for i in range(len(story_prompts)):
-    print(f"* Batch {i + 1} of {num_batches} *")
+    print(f"* Batch {i} of {len(story_prompts)- 1} *")
 
     print(f"Prompt: \n{prompt_text}" )
 
@@ -116,7 +125,8 @@ for i in range(len(story_prompts)):
         num_inference_steps=num_inference_steps, height=512, width=512)
     
     for i,image in enumerate(image_batch.images):
-        image_batch.images[i].save(f"{story_folder}/img_{current_prompt_index}_{num_inference_steps}_{i}.png")
+        image_batch.images[i].save(f"{story_folder_path}/img_{current_prompt_index}_{num_inference_steps}_{i}.png")
+        print(f"Image quality: {brisk(image)}")
     current_prompt_index +=1
     
     if current_prompt_index == len(story_prompts):
@@ -124,7 +134,12 @@ for i in range(len(story_prompts)):
 
     prompt_text = story_prompts[current_prompt_index]
 
-    prompt_text = prompt_text + f" Child Storybook illustration, 4k "# by Matt Bors"
+
+    prompt_text = prompt_text + f" Child Storybook illustration, 4k"
+    
+    if story_prompts_polarity[current_prompt_index] != "neutral" and story_prompts_polarity[current_prompt_index] != "resilience":
+        prompt_text += f", {story_prompts_polarity[current_prompt_index]}"
+    
     images += image_batch.images
 
-# Possible paths: mixing of two consecutive images.
+# Possible idea: aggregate polarity
