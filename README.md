@@ -1,6 +1,9 @@
 # ML-UA-Squad
 ML@UA Squad
 
+# Context and Motivation
+
+![img](figures/presentation_cover_1024_576.png)
 
 # Create a virtual environment
 
