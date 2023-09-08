@@ -189,4 +189,10 @@ pyrightconfig.json
 
 ml_ua_squad_env/
 
-kand22
+kand22/
+
+.idea
+.vscode/
+Fails/
+backup_stories/
+bad/

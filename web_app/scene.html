@@ -1,0 +1,47 @@
+<html lang="en-US">
+<meta charset="UTF-8">
+
+<head>
+	<title> Sandbox </title>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.3.0/dist/themes/light.css" />
+	<script type="module"
+		src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.3.0/dist/shoelace-autoloader.js"></script>
+
+	<link rel="stylesheet" href="src/style.css" />
+</head>
+
+<body>
+	<sl-drawer label="Drawer" class="drawer-overview">
+		<div>
+			<img src="src/music.svg" height="50" id="sound-on" class="sound" />
+			<img src="src/music_off.svg" height="50" id="sound-off" class="sound" />
+		</div>
+		<!-- <sl-button slot="footer" variant="primary">Close</sl-button> -->
+	</sl-drawer>
+	<div class="side">
+		<div class="container">
+			<div>
+				<div class="container">
+					<img src="src/arrow-b.svg" height="50" id="scene-back" class="arrow" />
+					<img id="main-image" />
+					<img src="src/arrow-f.svg" height="50" id="scene-forward" class="arrow" />
+				</div>
+				<div class="container">
+					<div id="main-text">
+						Empty Text
+					</div>
+				</div>
+				<!-- <div class="container">
+						<div>
+							aaaasdasd
+						</div>
+					</div> -->
+			</div>
+		</div>
+		<img src="src/settings.svg" height="50" id="menu" />
+	</div>
+</body>
+<script src="src/scene.js"></script>
+
+</html>

@@ -1,0 +1,57 @@
+<html lang="en-US">
+<meta charset="UTF-8">
+
+<head>
+	<title> Sandbox </title>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.3.0/dist/themes/light.css" />
+	<script type="module"
+		src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.3.0/dist/shoelace-autoloader.js"></script>
+
+	<script type="module" src="src/preview.js"></script>
+	<link rel="stylesheet" href="src/style.css" />
+</head>
+
+<body>
+
+	<div style="font-size: 20px;"> Select a journey </div>
+	<div class="side container" id="row1" class="row">
+
+	</div>
+	<div class="side container" id="row2" class="row">
+
+	</div>
+
+	<div >
+		<div class="container" style="margin-top: 6vh;">
+			<div style="font-size: 20px;"> Or start here your own!</div>
+		</div>
+		<sl-input style="margin-top: 1vh;"> </sl-input>
+	</div>
+</body>
+<script>
+	let files = [
+	{'img': 'images/1690128647_The_Hidden_Path_A_Journey_of_Courage_and_Adventure/img_0_0.52.png', 'title': 'The Hidden Path: A Journey of Courage and Adventure', 'json_path': '1690128647_The_Hidden_Path_A_Journey_of_Courage_and_Adventure.json'}, {'img': 'images/1690106398_Tooth_Sleuths_Unraveling_Mysteries_and_Identifying_Individuals_through_Dental_Clues/img_0_0.54.png', 'title': 'Tooth Sleuths: Unraveling Mysteries and Identifying Individuals through Dental Clues', 'json_path': '1690106398_Tooth_Sleuths_Unraveling_Mysteries_and_Identifying_Individuals_through_Dental_Clues.json'},{'img': "images/1689861518_Safe_and_Playful_Timmy's_Allergy_Adventure/img_0_0.52.png", 'title': "Safe and Playful: Timmy's Allergy Adventure", 'json_path': "1689861518_Safe_and_Playful_Timmy's_Allergy_Adventure.json"}, {'img': 'images/1690141220_The_Enigmatic_Cosmic_Vacuum_Unveiling_the_Secrets_of_Black_Holes/img_0_0.34.png', 'title': 'The Enigmatic Cosmic Vacuum: Unveiling the Secrets of Black Holes', 'json_path': '1690141220_The_Enigmatic_Cosmic_Vacuum_Unveiling_the_Secrets_of_Black_Holes.json'}, {'img': "images/1690136445_Lost_in_the_Jungle_A_Boy's_Adventure_and_the_Love_of_his_Animal_Family/img_0_0.60.png", 'title': "Lost in the Jungle: A Boy's Adventure and the Love of his Animal Family", 'json_path': "1690136445_Lost_in_the_Jungle_A_Boy's_Adventure_and_the_Love_of_his_Animal_Family.json"}, {'img': 'images/1690144597_"The_Park_A_Place_of_Laughter,_Friendship,_and_Endless_Fun"/img_0_0.57.png', 'title': '"The Park: A Place of Laughter, Friendship, and Endless Fun"', 'json_path': '1690144597_"The_Park_A_Place_of_Laughter,_Friendship,_and_Endless_Fun".json'}, {'img': "images/1689942495_The_Magical_Camera_Lily's_Journey_Inside_the_MRI_Machine/img_0_0.44.png", 'title': "The Magical Camera: Lily's Journey Inside the MRI Machine", 'json_path': "1689942495_The_Magical_Camera_Lily's_Journey_Inside_the_MRI_Machine.json"}, {'img': "images/1690128944_Oliver's_Redemption_A_Mischievous_Adventure_of_Greed,_Lessons,_and_Transformation/img_0_0.52.png", 'title': "Oliver's Redemption: A Mischievous Adventure of Greed, Lessons, and Transformation", 'json_path': "1690128944_Oliver's_Redemption_A_Mischievous_Adventure_of_Greed,_Lessons,_and_Transformation.json"}, {'img': 'images/1690134501_Time_Travel_Cowboys_A_Prehistoric_Adventure/img_0_0.55.png', 'title': 'Time Travel Cowboys: A Prehistoric Adventure', 'json_path': '1690134501_Time_Travel_Cowboys_A_Prehistoric_Adventure.json'}, {'img': 'images/1690142830_"Discovering_Portugal_Sofia\'s_Journey_through_Hidden_Treasures"/img_0_0.59.png', 'title': '"Discovering Portugal: Sofia\'s Journey through Hidden Treasures"', 'json_path': '1690142830_"Discovering_Portugal_Sofia\'s_Journey_through_Hidden_Treasures".json'}, {'img': 'images/1690138741_The_Legend_of_Kai_Journey_to_Martial_Arts_Mastery/img_0_0.59.png', 'title': 'The Legend of Kai: Journey to Martial Arts Mastery', 'json_path': '1690138741_The_Legend_of_Kai_Journey_to_Martial_Arts_Mastery.json'}, {'img': 'images/1690146673_The_Pottery_Challenge_A_Journey_of_Creativity,_Determination,_and_Revival/img_0_0.62.png', 'title': 'The Pottery Challenge: A Journey of Creativity, Determination, and Revival', 'json_path': '1690146673_The_Pottery_Challenge_A_Journey_of_Creativity,_Determination,_and_Revival.json'}
+	]
+	let c = f=> JSON.parse(JSON.stringify(f))
+	d3.select("#row1").selectAll("preview-thumb")
+		.data([files[0], files[1], files[2], files[3]])
+		.join("preview-thumb")
+			.attr("src", d => d.img)
+			.attr("title", d => d.title)
+			.style("margin", "5px 20px")
+			.on("click", function(e, d) {
+				location.href = 'http://127.0.0.1:8000/profile.html?q='+d.json_path;
+			});
+	d3.select("#row2").selectAll("preview-thumb")
+		.data([files[4], files[5], files[6], files[7]])
+		.join("preview-thumb")
+			.attr("src", d => d.img)
+			.attr("title", d => d.title)
+			.style("margin", "5px 20px")
+			.on("click", function(e, d) {
+				location.href = 'http://127.0.0.1:8000/profile.html?q='+d.json_path;
+			});
+</script>
+
+</html>

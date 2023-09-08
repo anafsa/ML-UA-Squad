@@ -1,0 +1,10 @@
+{
+	"title": "titlt titlt titlt titlt titlt",
+	"story": [
+		{ "text":["aaaa", "aa"], "image": "guile.jpg"},
+		{ "text":["bbbb", "bb"], "image": "guile2.jpg"},
+		{ "text":["cccc", "cc"], "image": "guile3.jpg"}
+	],
+	"thumb": "guile.jpg"
+}
+	
