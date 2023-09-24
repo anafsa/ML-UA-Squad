@@ -1,5 +1,6 @@
 # ML-UA-Squad
-ML@UA Squad
+
+Infinite Journeys: A platform that allows the creation of endless stories using Generative AI (LLMs and image diffusion models).
 
 # Context and Motivation
 
